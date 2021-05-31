@@ -1,0 +1,26 @@
+# IDE specific directories and files
+.idea
+*.iml
+.DS_Store
+
+# NPM and Bower dependencies
+node_modules*
+bower_components
+bower_components*
+
+# Generated temp directory that should be ignored.
+.target
+.tmp
+coverage
+
+# Log and debug files
+npm-debug.log
+debug.log
+
+build
+build-*
+target
+yarn.lock
+coverage
+dist
+.terser-cache
