@@ -67,7 +67,7 @@ export const FEATURES = [
   applyInheritancePlugin(),
 
   /** FRAMEWORKS */
-  litPlugin()
+  // litPlugin()
   // stencilPlugin()
   // catalystPlugin()
 ].flat();

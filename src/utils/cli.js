@@ -1,6 +1,7 @@
 import { readConfig, ConfigLoaderError } from '@web/config-loader';
 import fs from 'fs';
 import commandLineArgs from 'command-line-args';
+import { has } from './index.js';
 
 const IGNORE = [
   '!node_modules/**/*.*', 
@@ -10,8 +11,10 @@ const IGNORE = [
   '!**/*.config.{js,ts}'
 ];
 
+
+
 export function mergeGlobsAndExcludes(userConfig, cliConfig) {
-  const hasProvidedCliGlobs = cliConfig?.globs?.[0] !== '**/*.{js,ts}';
+  const hasProvidedCliGlobs = cliConfig?.globs?.[0] !== '**/*.{js,ts}' || has(userConfig?.globs);
 
   if(hasProvidedCliGlobs) {
     cliConfig.globs = cliConfig?.globs?.filter(glob => glob !== '**/*.{js,ts}');
@@ -19,8 +22,8 @@ export function mergeGlobsAndExcludes(userConfig, cliConfig) {
 
   const merged = [
     ...(userConfig?.globs || []),
-    ...(userConfig?.exclude?.map((i) => `!${i}`) || []),
     ...(cliConfig?.globs || []),
+    ...(userConfig?.exclude?.map((i) => `!${i}`) || []),
     ...(cliConfig?.exclude?.map((i) => `!${i}`) || []),
     ...IGNORE,
   ];

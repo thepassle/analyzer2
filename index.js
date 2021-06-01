@@ -33,10 +33,7 @@ import {
 
     const merged = mergeGlobsAndExcludes(userConfig, cliConfig);
 
-    const globs = await globby([
-      // ...merged, 
-      'fixtures/-default/package/**/*.{ts,js}'
-    ]);
+    const globs = await globby(merged);
 
     /**
      * Create modules for `create`

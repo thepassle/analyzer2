@@ -1,6 +1,8 @@
 export default {
-  globs: ['src/**/*.js'], 
-  exclude: ['src/foo.js'],
+  globs: ['fixtures/-default/package/**/*.js'], 
+  exclude: [],
   dev: true,
-  plugins: [/* myAwesomePlugin() */],
+  plugins: [
+    /** myAwesomePlugin() */
+  ],
 }

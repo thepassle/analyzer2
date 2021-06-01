@@ -144,18 +144,24 @@ function eventsVisitor(source, classTemplate) {
         if (isDispatchEvent(node)) {
           node?.arguments?.forEach((arg) => {
             if (arg.kind === ts.SyntaxKind.NewExpression) {
-              let eventDoc = {
-                name: '',
-                type: {
-                  text: '',
-                },
-              };
+              const eventName = arg.arguments[0].text;
 
-              eventDoc.name = arg.arguments[0].text;
-              eventDoc.type = { text: arg.expression.text };
-              eventDoc = handleJsDoc(eventDoc, node?.parent);
+              /**
+               * Check if event already exists
+               */
+              const eventExists = classTemplate?.events?.some(event => event.name === eventName);
 
-              classTemplate.events.push(eventDoc);
+              if(!eventExists) {
+                let eventDoc = {
+                  name: eventName,
+                  type: {
+                    text: arg.expression.text,
+                  },
+                };
+  
+                eventDoc = handleJsDoc(eventDoc, node?.parent);
+                classTemplate.events.push(eventDoc);
+              }
             }
           });
 
