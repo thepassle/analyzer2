@@ -50,8 +50,7 @@ testCases.forEach(testCase => {
       plugins = [...config.default.plugins];
     } catch {}
     
-
-    const result = await create({modules, plugins});
+    const result = create({modules, plugins});
 
     fs.writeFileSync(outputPath, JSON.stringify(result, null, 2));
 

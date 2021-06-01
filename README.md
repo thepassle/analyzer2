@@ -50,25 +50,33 @@ class MyElement extends HTMLElement {
     this.dispatchEvent(new Event('disabled-changed'));
   }
 }
+
+customElements.define('my-element', MyElement);
 ```
 
 `custom-elements.json`:
 
 ```JSON
 {
-  "schemaVersion": "experimental",
+  "schemaVersion": "0.1.0",
   "readme": "",
   "modules": [
     {
       "kind": "javascript-module",
-      "path": "./my-element.js",
+      "path": "fixtures/-default/package/my-element.js",
       "declarations": [
         {
           "kind": "class",
+          "description": "",
           "name": "MyElement",
-          "attributes": [
+          "members": [
             {
+              "kind": "field",
               "name": "disabled"
+            },
+            {
+              "kind": "method",
+              "name": "fire"
             }
           ],
           "events": [
@@ -79,21 +87,14 @@ class MyElement extends HTMLElement {
               }
             }
           ],
+          "attributes": [
+            {
+              "name": "disabled"
+            }
+          ],
           "superclass": {
             "name": "HTMLElement"
           },
-          "members": [
-            {
-              "kind": "field",
-              "name": "disabled",
-              "privacy": "public"
-            },
-            {
-              "kind": "method",
-              "name": "fire",
-              "privacy": "public"
-            }
-          ],
           "tagName": "my-element"
         }
       ],
@@ -103,7 +104,7 @@ class MyElement extends HTMLElement {
           "name": "my-element",
           "declaration": {
             "name": "MyElement",
-            "module": "./my-element.js"
+            "module": "fixtures/-default/package/my-element.js"
           }
         }
       ]
@@ -192,46 +193,51 @@ customElements.define('my-element', MyElement);
 
 ```json
 {
-  "schemaVersion": "experimental",
+  "schemaVersion": "0.1.0",
   "readme": "",
   "modules": [
     {
       "kind": "javascript-module",
-      "path": "./fixtures/TEST/package/my-el.js",
+      "path": "fixtures/-default/package/my-element.js",
       "declarations": [
         {
           "kind": "class",
+          "description": "",
           "name": "MyElement",
           "cssProperties": [
             {
-              "name": "--text-color",
-              "description": "Controls the color of foo"
+              "description": "- Controls the color of foo",
+              "name": "--text-color"
             },
             {
-              "name": "--background-color",
-              "description": "Controls the color of bar"
+              "description": "- Controls the color of bar",
+              "name": "--background-color"
             }
           ],
           "cssParts": [
             {
-              "name": "bar",
-              "description": "Styles the color of bar"
+              "description": "- Styles the color of bar",
+              "name": "bar"
             }
           ],
           "slots": [
             {
-              "name": "container",
-              "description": "You can put some elements here"
+              "description": "- You can put some elements here",
+              "name": "container"
             }
           ],
-          "attributes": [
+          "members": [
             {
+              "kind": "field",
               "name": "disabled",
               "type": {
                 "text": "boolean"
               },
-              "description": "corresponding property",
-              "fieldName": "disabled"
+              "default": "true"
+            },
+            {
+              "kind": "method",
+              "name": "fire"
             }
           ],
           "events": [
@@ -239,37 +245,17 @@ customElements.define('my-element', MyElement);
               "name": "foo-changed",
               "type": {
                 "text": "FooEvent"
-              },
-              "description": "description"
+              }
             }
           ],
           "superclass": {
-            "name": "LitElement",
-            "package": "lit-element"
+            "name": "LitElement"
           },
-          "members": [
-            {
-              "kind": "field",
-              "name": "disabled",
-              "privacy": "public",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "disabled state",
-              "default": "true"
-            },
-            {
-              "kind": "method",
-              "name": "fire",
-              "privacy": "public"
-            }
-          ],
           "tagName": "my-element"
         },
         {
           "kind": "variable",
           "name": "someVariable",
-          "description": "This will show up in the custom-elements.json too",
           "type": {
             "text": "boolean"
           }
@@ -281,7 +267,7 @@ customElements.define('my-element', MyElement);
           "name": "someVariable",
           "declaration": {
             "name": "someVariable",
-            "module": "./fixtures/TEST/package/my-el.js"
+            "module": "fixtures/-default/package/my-element.js"
           }
         },
         {
@@ -289,7 +275,7 @@ customElements.define('my-element', MyElement);
           "name": "my-element",
           "declaration": {
             "name": "MyElement",
-            "module": "./fixtures/TEST/package/my-el.js"
+            "module": "fixtures/-default/package/my-element.js"
           }
         }
       ]
@@ -363,7 +349,6 @@ interface userConfigOptions {
   globs: string[],
   exclude: string[],
   dev: boolean,
-
   plugins: Array<() => Plugin>
 }
 

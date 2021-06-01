@@ -5,15 +5,13 @@ import fs from 'fs';
 import commandLineArgs from 'command-line-args';
 
 import { create } from './src/create.js';
-import { getUserConfig } from './src/utils/cli.js';
-
-const IGNORE = [
-  '!node_modules/**/*.*', 
-  '!bower_components/**/*.*', 
-  '!**/*.test.{js,ts}', 
-  '!**/*.suite.{js,ts}', 
-  '!**/*.config.{js,ts}'
-];
+import { 
+  getUserConfig, 
+  getCliConfig, 
+  addFrameworkPlugins, 
+  addCustomElementsPropertyToPackageJson,
+  mergeGlobsAndExcludes
+} from './src/utils/cli.js';
 
 (async () => {
   const mainDefinitions = [
@@ -24,42 +22,31 @@ const IGNORE = [
   
   if (mainOptions.command === 'analyze') {
 
-    const optionDefinitions = [
-      { name: 'globs', type: String, multiple: true, defaultValue: [ '**/*.{js,ts}', '!**/.*.{js,ts}'] },
-      { name: 'exclude', type: String, multiple: true },
-      { name: 'dev', type: Boolean, defaultValue: false },
-      { name: 'litelement', type: Boolean, defaultValue: false },
-      { name: 'stencil', type: Boolean, defaultValue: false },
-      { name: 'catalyst', type: Boolean, defaultValue: false },
-    ];
-    
-    const commandLineOptions = commandLineArgs(optionDefinitions, { argv });
+    const cliConfig = getCliConfig(argv)
     const userConfig = await getUserConfig();
+
     /**
      * Merged config options
      * Command line options override userConfig options
      */
     const mergedOptions = { 
       ...userConfig,
-      ...commandLineOptions,
+      ...cliConfig,
     }
 
     /**
      * @TODO 🚨 if the cli/config file supplies `globs`, we have to ignore the default globs on line 28
      */
-    const merged = [
-      ...(userConfig?.globs || []),
-      ...(userConfig?.exclude?.map((i) => `!${i}`) || []),
-      ...(commandLineOptions?.globs || []),
-      ...(commandLineOptions?.exclude?.map((i) => `!${i}`) || []),
-      ...IGNORE,
-    ];
+    const merged = mergeGlobsAndExcludes(userConfig, cliConfig);
 
     const globs = await globby([
       // ...merged, 
       'fixtures/-default/package/**/*.{ts,js}'
     ]);
 
+    /**
+     * Create modules for `create`
+     */
     const modules = globs.map(glob => {
       const relativeModulePath = `./${path.relative(process.cwd(), glob)}`;
       const source = fs.readFileSync(relativeModulePath).toString();
@@ -72,25 +59,14 @@ const IGNORE = [
       );
     });
 
-    let plugins = [];
-    if(mergedOptions?.litelement) {
-      const { litPlugin } = await import('./src/features/framework-plugins/lit/lit.js');
-      plugins = [...(litPlugin() || [])]
-    }
+    const plugins = await addFrameworkPlugins(mergedOptions);
 
-    if(mergedOptions?.stencil) {
-      const { stencilPlugin } = await import('./src/features/framework-plugins/stencil/stencil.js');
-      plugins.push(stencilPlugin());
-    }
-
-    if(mergedOptions?.catalyst) {
-      const { catalystPlugin } = await import('./src/features/framework-plugins/catalyst/catalyst.js');
-      plugins.push(catalystPlugin());
-    }
-
+    /**
+     * Create the manifest
+     */
     const customElementsManifest = create({
       modules,
-      plugins: mergedOptions?.plugins || []
+      plugins: plugins || []
     });
     
     if(mergedOptions.dev) {
@@ -98,15 +74,7 @@ const IGNORE = [
     }
 
     try {
-      const packageJsonPath = `${process.cwd()}/package.json`;
-      const packageJson = JSON.parse(fs.readFileSync(packageJsonPath).toString());
-      
-      if(packageJson?.customElements) {
-        return;
-      } else {
-        packageJson.customElements = 'custom-elements.json';
-        fs.writeFileSync(packageJsonPath, `${JSON.stringify(packageJson, null, 2)}\n`);
-      }
+      addCustomElementsPropertyToPackageJson();
     } catch {
       console.log(`Could not add 'customElements' property to ${process.cwd()}/package.json. \nAdding this property helps tooling locate your Custom Elements Manifest. Please consider adding it yourself, or file an issue if you think this is a bug.\nhttps://www.github.com/open-wc/custom-elements-manifest`);
     }

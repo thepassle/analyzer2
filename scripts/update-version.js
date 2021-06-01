@@ -2,7 +2,7 @@
  * Updates the version nr of the fixtures
  *
  * @example
- * node scripts/update-version.mjs --version 0.2.0
+ * node scripts/update-version.js --version 0.2.0
  */
 
 import globby from 'globby';
