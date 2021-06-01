@@ -23,7 +23,7 @@ export function classJsDocPlugin() {
            * Checks to see if the item is already in the classDoc, and if so merge and overwrite (JSDoc takes precedence)
            */
           node?.jsDoc?.forEach(jsDoc => {
-            const parsed = parse(jsDoc?.getFullText());
+            const parsed = parse.parse(jsDoc?.getFullText());
             parsed?.forEach(parsedJsDoc => {
               parsedJsDoc?.tags?.forEach(jsDoc => {
                 switch(jsDoc.tag) {

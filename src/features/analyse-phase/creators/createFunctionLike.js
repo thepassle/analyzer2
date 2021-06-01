@@ -65,9 +65,7 @@ export function handleParametersAndReturnType(functionLike, node) {
       parameter.type = {text: param.type.getText() }
     }
 
-    if(!(ts.isObjectBindingPattern(param.name))) {
-      parameters.push(parameter);
-    } 
+    parameters.push(parameter);
   });
 
   if(has(parameters)) {
