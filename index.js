@@ -29,10 +29,7 @@ import {
      * Merged config options
      * Command line options override userConfig options
      */
-    const mergedOptions = { 
-      ...userConfig,
-      ...cliConfig,
-    }
+    const mergedOptions = { ...userConfig, ...cliConfig };
 
     /**
      * @TODO 🚨 if the cli/config file supplies `globs`, we have to ignore the default globs on line 28

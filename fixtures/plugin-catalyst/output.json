@@ -4,7 +4,7 @@
   "modules": [
     {
       "kind": "javascript-module",
-      "path": "fixtures/catalyst-plugin/package/my-element.js",
+      "path": "fixtures/plugin-catalyst/package/my-element.js",
       "declarations": [
         {
           "kind": "class",
@@ -40,7 +40,7 @@
           "name": "hello-world",
           "declaration": {
             "name": "HelloWorldElement",
-            "module": "fixtures/catalyst-plugin/package/my-element.js"
+            "module": "fixtures/plugin-catalyst/package/my-element.js"
           }
         }
       ]

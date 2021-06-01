@@ -1,4 +1,5 @@
 import { LitElement, property, customElement } from 'lit-element';
+
 @customElement('my-element')
 class MyElement extends LitElement {
   static get properties() {

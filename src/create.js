@@ -8,7 +8,6 @@ import { FEATURES } from './features/index.js';
  * 
  *  - Tests
  *   - lit
- *   - inheritance superclasses
  */
 
 /**
