@@ -2,15 +2,6 @@ import ts from 'typescript';
 import { FEATURES } from './features/index.js';
 
 /**
- * 🚨🚨🚨 NOTES TO SELF 🚨🚨🚨
- *
- * - TODO:
- * 
- *  - Tests
- *   - lit
- */
-
-/**
  * CORE
  * 
  * This function is the core of the analyzer. It takes an array of ts sourceFiles, and creates a

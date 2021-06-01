@@ -31,9 +31,6 @@ import {
      */
     const mergedOptions = { ...userConfig, ...cliConfig };
 
-    /**
-     * @TODO 🚨 if the cli/config file supplies `globs`, we have to ignore the default globs on line 28
-     */
     const merged = mergeGlobsAndExcludes(userConfig, cliConfig);
 
     const globs = await globby([

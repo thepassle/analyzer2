@@ -10,10 +10,13 @@ const IGNORE = [
   '!**/*.config.{js,ts}'
 ];
 
-/**
- * @TODO 🚨 if the cli/config file supplies `globs`, we have to ignore the default globs on line 28
- */
 export function mergeGlobsAndExcludes(userConfig, cliConfig) {
+  const hasProvidedCliGlobs = cliConfig?.globs?.[0] !== '**/*.{js,ts}';
+
+  if(hasProvidedCliGlobs) {
+    cliConfig.globs = cliConfig?.globs?.filter(glob => glob !== '**/*.{js,ts}');
+  }
+
   const merged = [
     ...(userConfig?.globs || []),
     ...(userConfig?.exclude?.map((i) => `!${i}`) || []),
@@ -42,7 +45,7 @@ export async function getUserConfig() {
 
 export function getCliConfig(argv) {
   const optionDefinitions = [
-    { name: 'globs', type: String, multiple: true, defaultValue: [ '**/*.{js,ts}', '!**/.*.{js,ts}'] },
+    { name: 'globs', type: String, multiple: true, defaultValue: ['**/*.{js,ts}'] },
     { name: 'exclude', type: String, multiple: true },
     { name: 'dev', type: Boolean, defaultValue: false },
     { name: 'litelement', type: Boolean, defaultValue: false },
