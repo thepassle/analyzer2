@@ -37,7 +37,7 @@ import {
     const globs = await globby(merged);
 
     /**
-     * Create modules for `create`
+     * Create modules for `create()`
      * 
      * By default, the analyzer doesn't actually compile a users source code with the TS compiler
      * API. This means that by default, the typeChecker is not available in plugins.
@@ -82,5 +82,4 @@ import {
   } else {
     console.log(MENU);
   }
-
 })();
