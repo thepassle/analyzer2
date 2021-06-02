@@ -1,1 +1,0 @@
-export function foo({bar, baz = true}:string, second, third){}

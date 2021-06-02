@@ -50,3 +50,29 @@ export function hasInitializer(node) {
   return node?.declarationList?.declarations?.some(declaration => declaration?.initializer);
 }
 
+export function getElementNameFromDecorator(decorator) {
+  const argument = decorator.expression.arguments[0];
+
+  /**
+   * @example @customElement('my-el')
+   */
+  if(argument.kind === ts.SyntaxKind.StringLiteral) {
+    return argument.text;
+  }
+
+  /**
+   * @example @customElement({
+   *   name: 'my-el',
+   *   template
+   * })
+   */
+  if(argument.kind === ts.SyntaxKind.ObjectLiteralExpression) {
+    let result;
+    argument?.properties?.forEach(property => {
+      if(property?.name?.getText() === 'name') {
+        result = property?.initializer?.text;
+      }
+    });
+    return result;
+  }
+}

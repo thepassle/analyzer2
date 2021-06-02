@@ -16,7 +16,7 @@ export function collectImportsPlugin() {
   const imports = [];
 
   return {
-    collectPhase({node, moduleDoc}){
+    analyzePhase({node, moduleDoc}){
 
       /** 
        * @example import defaultExport from 'foo'; 
@@ -64,7 +64,7 @@ export function collectImportsPlugin() {
       moduleDoc.imports = imports;
     },
 
-    packageLinkPhase(customElementsManifest){
+    packageLinkPhase({customElementsManifest, context}){
       /**
        * Delete `imports` from the moduleDoc, since they are not specced in the schema
        * and we only need them during AST stuff.

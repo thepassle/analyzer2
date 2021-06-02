@@ -16,7 +16,7 @@ import { FEATURES } from './features/index.js';
  * custom elements manifest.
  */
 export function create({modules, plugins = []}) {
-  const CEM = {
+  const customElementsManifest = {
     schemaVersion: '0.1.0',
     readme: '',
     modules: [],
@@ -24,11 +24,21 @@ export function create({modules, plugins = []}) {
 
   const mergedPlugins = [
     ...FEATURES,
-    ...plugins
+    ...plugins,
   ];
 
-  modules.forEach(currModule => {
+  const context = {};
 
+  modules.forEach(currModule => {
+    /**
+     * COLLECT PHASE
+     * First pass through all modules. Can be used to gather imports, exports, types, default values, 
+     * which you may need to know the existence of in a later phase.
+     */
+    collect(currModule, context, mergedPlugins);
+  });
+
+  modules.forEach(currModule => {
     const moduleDoc = {
       kind: "javascript-module",
       path: currModule.fileName,
@@ -37,20 +47,13 @@ export function create({modules, plugins = []}) {
     };
 
     /**
-     * COLLECT PHASE
-     * First pass through the module. Can be used to gather imports, exports, types, default values, 
-     * which you may need to know the existence of in a later phase.
-     */
-    collect(currModule, moduleDoc, mergedPlugins);
-
-    /**
      * ANALYZE PHASE
      * Go through the AST of every separate module, and gather as much as information as we can
      * This includes a modules imports, which are not specified in custom-elements.json, but are
      * required for the LINK PHASE, and deleted when processed
      */
-    analyze(currModule, moduleDoc, mergedPlugins);
-    CEM.modules.push(moduleDoc);
+    analyze(currModule, moduleDoc, context, mergedPlugins);
+    customElementsManifest.modules.push(moduleDoc);
 
     /**
      * LINK PHASE
@@ -59,7 +62,7 @@ export function create({modules, plugins = []}) {
      * - Applying inheritance to classes (adding `inheritedFrom` properties/attrs/events/methods)
      */
     mergedPlugins.forEach(({moduleLinkPhase}) => {
-      moduleLinkPhase && moduleLinkPhase({ts, moduleDoc});
+      moduleLinkPhase && moduleLinkPhase({ts, moduleDoc, context});
     });
   });
 
@@ -71,30 +74,30 @@ export function create({modules, plugins = []}) {
    * - Apply inheritance
    */
   mergedPlugins.forEach(({packageLinkPhase}) => {
-    packageLinkPhase && packageLinkPhase(CEM);
+    packageLinkPhase && packageLinkPhase({customElementsManifest, context});
   });
 
-  return CEM;
+  return customElementsManifest;
 }
 
-function collect(source, moduleDoc, mergedPlugins) {
+function collect(source, context, mergedPlugins) {
   visitNode(source);
 
   function visitNode(node) {
     mergedPlugins.forEach(({collectPhase}) => {
-      collectPhase && collectPhase({ts, node, moduleDoc});
+      collectPhase && collectPhase({ts, node, context});
     });
 
     ts.forEachChild(node, visitNode);
   }
 }
 
-function analyze(source, moduleDoc, mergedPlugins) {
+function analyze(source, moduleDoc, context, mergedPlugins) {
   visitNode(source);
 
   function visitNode(node) {
     mergedPlugins.forEach(({analyzePhase}) => {
-      analyzePhase && analyzePhase({ts, node, moduleDoc});
+      analyzePhase && analyzePhase({ts, node, moduleDoc, context});
     });
 
     ts.forEachChild(node, visitNode);

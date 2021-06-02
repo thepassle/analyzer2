@@ -7,7 +7,7 @@ import { getAllDeclarationsOfKind, getAllExportsOfKind } from '../../utils/manif
  */
 export function linkClassToTagnamePlugin() {
   return {
-    packageLinkPhase(customElementsManifest){
+    packageLinkPhase({customElementsManifest, context}){
       /* Get all class declarations and custom element definitions in the manifest */
       const classes = getAllDeclarationsOfKind(customElementsManifest, 'class');
       const definitions = getAllExportsOfKind(customElementsManifest, 'custom-element-definition');

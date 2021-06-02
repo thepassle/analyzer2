@@ -8,7 +8,7 @@ import { resolveModuleOrPackageSpecifier } from '../../utils/index.js';
  */
 export function applyInheritancePlugin() {
   return {
-    packageLinkPhase(customElementsManifest){
+    packageLinkPhase({customElementsManifest, context}){
       const classes = getAllDeclarationsOfKind(customElementsManifest, 'class');
 
       classes.forEach((customElement) => {

@@ -360,7 +360,7 @@ You can also write custom plugins to extend the functionality to fit what your p
 
 A plugin is a function that returns an object. There are several hooks you can opt in to:
 
-- **collectPhase**: Runs for each module, and gives access to the current Module's moduleDoc, and gives access to the AST nodes of your source code. This is useful for collecting information you may need access to in a later phase.
+- **collectPhase**: First passthrough through the AST of all modules in a project, before continuing to the `analyzePhase`. Runs for each module, and gives access to a Context object that you can use for sharing data between phases, and gives access to the AST nodes of your source code. This is useful for collecting information you may need access to in a later phase.
 - **analyzePhase**: Runs for each module, and gives access to the current Module's moduleDoc, and gives access to the AST nodes of your source code. This is generally used for AST stuff.
 - **moduleLinkPhase**: Runs after a module is done analyzing, all information about your module should now be available. You can use this hook to stitch pieces of information together.
 - **packageLinkPhase**: Runs after all modules are done analyzing, and after post-processing. All information should now be available and linked together.
@@ -386,10 +386,10 @@ export default {
   plugins: [
     function myPlugin() {
       return {
+        // Runs for all modules in a project, before continuing to the `analyzePhase`
+        collectPhase({ts, node, context}){},
         // Runs for each module
-        collectPhase({ts, node, moduleDoc}){},
-        // Runs for each module
-        analyzePhase({ts, node, moduleDoc}){
+        analyzePhase({ts, node, moduleDoc, context}){
           // You can use this phase to access a module's AST nodes and mutate the custom-elements-manifest
           switch (node.kind) {
             case ts.SyntaxKind.ClassDeclaration:
@@ -414,9 +414,9 @@ export default {
           }
         },
         // Runs for each module, after analyzing, all information about your module should now be available
-        moduleLinkPhase({moduleDoc}){},
+        moduleLinkPhase({moduleDoc, context}){},
         // Runs after modules have been parsed and after post-processing
-        packageLinkPhase(customElementsManifest){},
+        packageLinkPhase({customElementsManifest, context}){},
       }
     }
   ]  
@@ -433,7 +433,7 @@ function generateReadme() {
   const components = ['my-component-a', 'my-component-b'];
 
   return {
-    packageLinkPhase(cem) {
+    packageLinkPhase({customElementsManifest, context}) {
       cem.modules.forEach(mod => {
         mod.declarations.forEach(declaration => {
           if(components.includes(declaration.tagName)) {
@@ -455,7 +455,7 @@ function generateReadme() {
 
 ### Collect phase
 
-During the collect phase, `@custom-elements-manifest/analyzer` goes through the AST of every module in your package. You can use this phase to _collect_ any information that you may need in a later stage.
+During the collect phase, `@custom-elements-manifest/analyzer` goes through the AST of every module in your package. You can use this phase to _collect_ any information that you may need in a later stage. All modules in a project are visited before continuing to the `analyzePhase`.
 
 ### Analyze phase
 

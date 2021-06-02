@@ -1,12 +1,13 @@
 /**
  * COLLECT
  */
-import { collectImportsPlugin } from './collect-phase/collect-imports.js';
-import { exportsPlugin } from './collect-phase/exports.js';
+// EMPTY
 
 /**
  * ANALYSE
  */
+import { collectImportsPlugin } from './analyse-phase/collect-imports.js';
+import { exportsPlugin } from './analyse-phase/exports.js';
 import { customElementsDefineCallsPlugin } from './analyse-phase/custom-elements-define-calls.js';
 import { functionLikePlugin } from './analyse-phase/function-like.js';
 import { arrowFunctionPlugin } from './analyse-phase/arrow-function.js';
@@ -29,7 +30,6 @@ import { cleanupClassesPlugin } from './link-phase/cleanup-classes.js';
  */
 import { linkClassToTagnamePlugin } from './post-processing/link-class-to-tagname.js';
 import { applyInheritancePlugin } from './post-processing/apply-inheritance.js';
-
 
 /**
  * FRAMEWORKS

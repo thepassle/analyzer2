@@ -13,7 +13,7 @@ import { isBareModuleSpecifier } from '../../utils/index.js';
  */
 export function exportsPlugin() {
   return {
-    collectPhase({ts, node, moduleDoc}){
+    analyzePhase({ts, node, moduleDoc}){
       /**
        * @example export const foo = '';
        */

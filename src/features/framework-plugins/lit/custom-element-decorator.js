@@ -1,3 +1,4 @@
+import { getElementNameFromDecorator } from '../../../utils/ast-helpers.js';
 import { has, decorator, resolveModuleOrPackageSpecifier } from '../../../utils/index.js';
 
 /**
@@ -14,8 +15,8 @@ export function customElementDecoratorPlugin() {
 
         if(customElementDecorator) {
           const className = node.name.text;
-          const tagName = customElementDecorator.expression.arguments[0].text;
-          
+          const tagName = getElementNameFromDecorator(customElementDecorator);
+
           const definitionDoc = {
             kind: 'custom-element-definition',
             name: tagName,
@@ -32,3 +33,4 @@ export function customElementDecoratorPlugin() {
     }
   }
 }
+
