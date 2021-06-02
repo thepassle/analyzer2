@@ -340,7 +340,17 @@ export default {
   globs: ['src/**/*.js'], 
   exclude: ['src/foo.js'],
   dev: true,
-  plugins: [myAwesomePlugin()],
+  plugins: [
+    myAwesomePlugin()
+  ],
+
+  /** Even more advanced usecases: */
+  overrideModuleCreation: ({ts, globs}) => {
+    const program = ts.createProgram(globs, defaultCompilerOptions);
+    typeChecker = program.getTypeChecker();
+
+    return program.getSourceFiles().filter(sf => globs.find(glob => sf.fileName.includes(glob)));
+  },
 }
 ```
 
@@ -351,7 +361,8 @@ interface userConfigOptions {
   globs: string[],
   exclude: string[],
   dev: boolean,
-  plugins: Array<() => Plugin>
+  plugins: Array<() => Plugin>,
+  overrideModuleCreation: () => Array<SourceFile>
 }
 
 ```
@@ -473,3 +484,45 @@ During the package link phase, we'll have all the information we need about a pa
 
 - Finding a CustomElement's tagname by finding its `customElements.define()` call, if present
 - Applying inheritance to classes (adding inherited members/attributes/events etc)
+
+## Overriding sourceFile creation
+
+By default, `@custom-elements-manifest/analyzer` does _not_ compile any code with TS. It just uses the TS compiler API to create an AST of your source code. This means that there is no `typeChecker` available in plugins.
+
+If you _do_ want to use the `typeChecker`, you can override the creation of modules in your `custom-elements-manifest.config.js`:
+
+```js
+import { defaultCompilerOptions } from './compilerOptions.js';
+import { myPlugin } from './my-plugin.js';
+
+let typeChecker;
+
+export default {
+  globs: ['fixtures/-default/package/**/*.js'], 
+  exclude: [],
+  dev: true,
+  overrideModuleCreation: ({ts, globs}) => {
+    const program = ts.createProgram(globs, defaultCompilerOptions);
+    typeChecker = program.getTypeChecker();
+
+    return program.getSourceFiles().filter(sf => globs.find(glob => sf.fileName.includes(glob)));
+  },
+  plugins: [
+    /** You can now pass the typeChecker to your plugins */
+    myPlugin(typeChecker)
+  ],
+}
+
+```
+
+`my-plugin.js`:
+```js
+export function myPlugin(typeChecker) {
+  return {
+    analyzePhase({ts, moduleDoc, context}) {
+      // do something with typeChecker
+    }
+  }
+}
+
+```
