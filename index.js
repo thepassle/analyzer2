@@ -33,7 +33,6 @@ import {
     const mergedOptions = { ...userConfig, ...cliConfig };
 
     const merged = mergeGlobsAndExcludes(userConfig, cliConfig);
-
     const globs = await globby(merged);
 
     /**
@@ -67,7 +66,7 @@ import {
      */
     const customElementsManifest = create({
       modules,
-      plugins: plugins || []
+      plugins,
     });
     
     if(mergedOptions.dev) {

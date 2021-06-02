@@ -18,6 +18,12 @@ npm i -D @custom-elements-manifest/analyzer
 custom-elements-manifest analyze
 ```
 
+or
+
+```bash
+cem analyze
+```
+
 ### Options
 
 | Command/option   | Type       | Description                                          | Example               |
