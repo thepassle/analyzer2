@@ -53,6 +53,7 @@ export function getCliConfig(argv) {
     { name: 'dev', type: Boolean, defaultValue: false },
     { name: 'litelement', type: Boolean, defaultValue: false },
     { name: 'stencil', type: Boolean, defaultValue: false },
+    { name: 'fast', type: Boolean, defaultValue: false },
     { name: 'catalyst', type: Boolean, defaultValue: false },
   ];
   
@@ -66,6 +67,11 @@ export async function addFrameworkPlugins(mergedOptions) {
     plugins = [...(litPlugin() || [])]
   }
 
+  if(mergedOptions?.fast) {
+    const { fastPlugin } = await import('../features/framework-plugins/fast/fast.js');
+    plugins = [...(fastPlugin() || [])]
+  }
+
   if(mergedOptions?.stencil) {
     const { stencilPlugin } = await import('../features/framework-plugins/stencil/stencil.js');
     plugins.push(stencilPlugin());
@@ -73,7 +79,7 @@ export async function addFrameworkPlugins(mergedOptions) {
 
   if(mergedOptions?.catalyst) {
     const { catalystPlugin } = await import('../features/framework-plugins/catalyst/catalyst.js');
-    plugins.push(catalystPlugin());
+    plugins = [...(catalystPlugin() || [])]
   }
 
   return plugins;

@@ -26,6 +26,7 @@ custom-elements-manifest analyze
 | --globs          | string[]   | Globs to analyze                                     | `--globs "foo.js"`    |
 | --exclude        | string[]   | Globs to exclude                                     | `--exclude "foo.js"`  |
 | --litelement     | boolean    | Enable special handling for LitElement syntax        | `--litelement`        |
+| --fast           | boolean    | Enable special handling for FASTElement syntax       | `--fast`              |
 | --stencil        | boolean    | Enable special handling for Stencil syntax           | `--stencil`           |
 | --catalyst       | boolean    | Enable special handling for Catalyst syntax          | `--catalyst`          |
 
@@ -121,6 +122,7 @@ customElements.define('my-element', MyElement);
 - Vanilla 
 - TS 
 - LitElement (opt-in via CLI flag) 
+- FASTElement (opt-in via CLI flag) 
 - Stencil (opt-in via CLI flag)
 - Catalyst (opt-in via CLI flag)
 

@@ -1,4 +1,4 @@
-import { customElementDecoratorPlugin } from './custom-element-decorator.js';
+import { customElementDecoratorPlugin } from '../decorators/custom-element-decorator.js';
 import { methodDenyListPlugin } from './method-denylist.js';
 import { memberDenyListPlugin } from './member-denylist.js';
 import { propertyDecoratorPlugin } from './property-decorator.js';
