@@ -485,6 +485,10 @@ During the package link phase, we'll have all the information we need about a pa
 - Finding a CustomElement's tagname by finding its `customElements.define()` call, if present
 - Applying inheritance to classes (adding inherited members/attributes/events etc)
 
+### Can I bring my own instance of TS?
+
+No! Or well, you can. But that might break things. TypeScript doesn't follow semver, which means that there may be breaking changes in between minor or even patch versions of TypeScript. This means that if you use a different version of TypeScript than the analyzer's version of TypeScript, things will almost definitely break. As a convenience, plugin functions get passed the analyzer's version of TS to ensure there are no version incompatibilities, and everything works as expected.
+
 ## Overriding sourceFile creation
 
 By default, `@custom-elements-manifest/analyzer` does _not_ compile any code with TS. It just uses the TS compiler API to create an AST of your source code. This means that there is no `typeChecker` available in plugins.
