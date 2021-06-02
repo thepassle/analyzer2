@@ -11,8 +11,6 @@ const IGNORE = [
   '!**/*.config.{js,ts}'
 ];
 
-
-
 export function mergeGlobsAndExcludes(userConfig, cliConfig) {
   const hasProvidedCliGlobs = cliConfig?.globs?.[0] !== '**/*.{js,ts}' || has(userConfig?.globs);
 
@@ -96,3 +94,20 @@ export function addCustomElementsPropertyToPackageJson() {
     fs.writeFileSync(packageJsonPath, `${JSON.stringify(packageJson, null, 2)}\n`);
   }
 }
+
+export const MENU = `
+@custom-elements-manifest/analyzer
+
+Available commands:
+    | Command/option   | Type       | Description                                          | Example               |
+    | ---------------- | ---------- | ---------------------------------------------------- | --------------------- |
+    | analyze          |            | Analyze your components                              |                       |
+    | --globs          | string[]   | Globs to analyze                                     | \`--globs "foo.js"\`    |
+    | --exclude        | string[]   | Globs to exclude                                     | \`--exclude "foo.js"\`  |
+    | --litelement     | boolean    | Enable special handling for LitElement syntax        | \`--litelement\`        |
+    | --stencil        | boolean    | Enable special handling for Stencil syntax           | \`--stencil\`           |
+    | --catalyst       | boolean    | Enable special handling for Catalyst syntax          | \`--catalyst\`          |
+
+Example:
+    custom-elements-manifest analyze --litelement --globs "**/*.js" --exclude "foo.js" "bar.js"
+`

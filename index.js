@@ -10,7 +10,8 @@ import {
   getCliConfig, 
   addFrameworkPlugins, 
   addCustomElementsPropertyToPackageJson,
-  mergeGlobsAndExcludes
+  mergeGlobsAndExcludes,
+  MENU
 } from './src/utils/cli.js';
 
 (async () => {
@@ -70,22 +71,7 @@ import {
       console.log(`Could not add 'customElements' property to ${process.cwd()}/package.json. \nAdding this property helps tooling locate your Custom Elements Manifest. Please consider adding it yourself, or file an issue if you think this is a bug.\nhttps://www.github.com/open-wc/custom-elements-manifest`);
     }
   } else {
-    console.log(`
-@custom-elements-manifest/analyzer
-
-Available commands:
-    | Command/option   | Type       | Description                                          | Example               |
-    | ---------------- | ---------- | ---------------------------------------------------- | --------------------- |
-    | analyze          |            | Analyze your components                              |                       |
-    | --globs          | string[]   | Globs to analyze                                     | \`--globs "foo.js"\`    |
-    | --exclude        | string[]   | Globs to exclude                                     | \`--exclude "foo.js"\`  |
-    | --litelement     | boolean    | Enable special handling for LitElement syntax        | \`--litelement\`        |
-    | --stencil        | boolean    | Enable special handling for Stencil syntax           | \`--stencil\`           |
-    | --catalyst       | boolean    | Enable special handling for Catalyst syntax          | \`--catalyst\`          |
-
-Example:
-    custom-elements-manifest analyze --litelement --globs "**/*.js" --exclude "foo.js" "bar.js"
-`)
+    console.log(MENU);
   }
 
 })();

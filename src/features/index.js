@@ -1,7 +1,7 @@
 /**
  * COLLECT
  */
-// EMPTY
+
 
 /**
  * ANALYSE
@@ -34,20 +34,20 @@ import { applyInheritancePlugin } from './post-processing/apply-inheritance.js';
 /**
  * FRAMEWORKS
  */
-// import { stencilPlugin } from './framework-plugins/stencil/stencil.js';
-// import { catalystPlugin } from './framework-plugins/catalyst/catalyst.js';
+import { stencilPlugin } from './framework-plugins/stencil/stencil.js';
+import { catalystPlugin } from './framework-plugins/catalyst/catalyst.js';
 import { fastPlugin } from './framework-plugins/fast/fast.js';
-// import { litPlugin } from './framework-plugins/lit/lit.js';
+import { litPlugin } from './framework-plugins/lit/lit.js';
 
 /** 
  * Establish the execution order of plugins 
  */
 export const FEATURES = [
   /** COLLECT */
+  
+  /** ANALYSE */
   collectImportsPlugin(),
   exportsPlugin(),
-
-  /** ANALYSE */
   customElementsDefineCallsPlugin(),
   functionLikePlugin(),
   arrowFunctionPlugin(),
