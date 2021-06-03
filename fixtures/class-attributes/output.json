@@ -49,6 +49,7 @@
           "superclass": {
             "name": "HTMLElement"
           },
+          "isCustomElement": true,
           "tagName": "my-el"
         }
       ],

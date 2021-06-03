@@ -9,29 +9,115 @@
         {
           "kind": "class",
           "description": "",
-          "name": "MyEl",
-          "members": [
-            {
-              "kind": "field",
-              "name": "foo",
-              "default": ""
-            },
-            {
-              "kind": "field",
-              "name": "bar"
-            }
-          ],
+          "name": "MyEl1",
+          "superclass": {
+            "name": "BlaElement"
+          }
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MyEl2",
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "isCustomElement": true
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MyEl3",
+          "superclass": {
+            "name": "LitElement"
+          },
+          "isCustomElement": true
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MyEl4",
           "superclass": {
             "name": "FASTElement"
+          },
+          "isCustomElement": true
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MyEl5",
+          "superclass": {
+            "name": "BlaElement"
+          },
+          "tagName": "my-el5"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Foo",
+          "superclass": {
+            "name": "Something"
           }
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Bar"
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "MyEl",
+          "name": "MyEl1",
           "declaration": {
-            "name": "MyEl",
+            "name": "MyEl1",
+            "module": "fixtures/-default/package/bar.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "MyEl2",
+          "declaration": {
+            "name": "MyEl2",
+            "module": "fixtures/-default/package/bar.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "MyEl3",
+          "declaration": {
+            "name": "MyEl3",
+            "module": "fixtures/-default/package/bar.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "MyEl4",
+          "declaration": {
+            "name": "MyEl4",
+            "module": "fixtures/-default/package/bar.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "my-el5",
+          "declaration": {
+            "name": "MyEl5",
+            "module": "fixtures/-default/package/bar.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "Foo",
+          "declaration": {
+            "name": "Foo",
+            "module": "fixtures/-default/package/bar.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "Bar",
+          "declaration": {
+            "name": "Bar",
             "module": "fixtures/-default/package/bar.js"
           }
         }

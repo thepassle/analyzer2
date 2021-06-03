@@ -35,7 +35,8 @@
           ],
           "superclass": {
             "name": "HTMLElement"
-          }
+          },
+          "isCustomElement": true
         }
       ],
       "exports": [

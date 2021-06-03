@@ -70,6 +70,7 @@
           "superclass": {
             "name": "LitElement"
           },
+          "isCustomElement": true,
           "tagName": "my-element"
         }
       ],
