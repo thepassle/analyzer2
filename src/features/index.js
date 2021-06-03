@@ -28,7 +28,7 @@ import { cleanupClassesPlugin } from './link-phase/cleanup-classes.js';
 /**
  * POST-PROCESSING
  */
-import { isCustomElementPlugin } from './analyse-phase/is-custom-element.js';
+import { isCustomElementPlugin } from './post-processing/is-custom-element.js';
 import { linkClassToTagnamePlugin } from './post-processing/link-class-to-tagname.js';
 import { applyInheritancePlugin } from './post-processing/apply-inheritance.js';
 
