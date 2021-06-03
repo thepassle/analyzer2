@@ -122,7 +122,7 @@ customElements.define('my-element', MyElement);
 
 ### Support
 
-`@custom-elements-manifest/analyzer` by default supports standard JavaScript, and _vanilla_ web components. Dedicated web component libraries can be supported through the use of plugins. Currently, support for LitElement, Stencil and Catalyst is provided in this project via plugins. You can enable them by using the CLI flags `--litelement`, `--stencil` and `--catalyst` respectively, or loading the plugin via your `custom-elements-manifest.config.js`.
+`@custom-elements-manifest/analyzer` by default supports standard JavaScript, and _vanilla_ web components. Dedicated web component libraries can be supported through the use of plugins. Currently, support for LitElement, Stencil and Catalyst is provided in this project via plugins. You can enable them by using the CLI flags `--litelement`, `--fast`, `--stencil` and `--catalyst` respectively, or loading the plugin via your `custom-elements-manifest.config.js`.
 
 **TL;DR:** 
 - JavaScript 

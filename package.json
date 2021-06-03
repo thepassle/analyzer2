@@ -19,7 +19,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js analyze --dev",
+    "start": "nodemon --ignore './custom-elements.json' index.js analyze --dev",
     "test": "uvu test",
     "test:watch": "watchexec -w src -w test npm test",
     "update-fixtures": "node scripts/update-version.js --version 0.1.0"

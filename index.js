@@ -69,6 +69,8 @@ import {
       plugins,
     });
     
+    fs.writeFileSync(`${process.cwd()}/custom-elements.json`, `${JSON.stringify(customElementsManifest, null, 2)}\n`);
+
     if(mergedOptions.dev) {
       console.log(JSON.stringify(customElementsManifest, null, 2));
     }

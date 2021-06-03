@@ -76,3 +76,10 @@ export function getElementNameFromDecorator(decorator) {
     return result;
   }
 }
+
+
+/**
+ * Gets the name of an attr from a decorators callExpression
+ * @example @attr({attribute: 'my-el'})
+ */
+export const getOptionsObject = decorator => decorator?.expression?.arguments?.find(arg => arg.kind === ts.SyntaxKind.ObjectLiteralExpression);

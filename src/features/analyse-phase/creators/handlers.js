@@ -77,7 +77,7 @@ export function handleJsDoc(doc, node) {
       if(tag.kind === ts.SyntaxKind.JSDocReturnTag) {
         doc.return = {
           type: {
-            text: handleJsDocType(tag.typeExpression.type.getText())
+            text: handleJsDocType(tag?.typeExpression?.type?.getText())
           }
         }
       }

@@ -17,4 +17,5 @@ const template = html<NameTag>`
 })
 export class NameTag extends FASTElement {
   @attr greeting: string = 'Hello';
+  @attr({attribute: 'my-attr'}) bar;
 }

@@ -3,5 +3,5 @@
  */
 
 export function handleJsDocType(type) {
-  return type.replace(/(import\(.+?\).)/g, '');
+  return type?.replace(/(import\(.+?\).)/g, '') || '';
 }

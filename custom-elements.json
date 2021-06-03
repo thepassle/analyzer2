@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "0.1.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "fixtures/-default/package/bar.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MyEl",
+          "members": [
+            {
+              "kind": "field",
+              "name": "foo",
+              "default": ""
+            },
+            {
+              "kind": "field",
+              "name": "bar"
+            }
+          ],
+          "superclass": {
+            "name": "FASTElement"
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MyEl",
+          "declaration": {
+            "name": "MyEl",
+            "module": "fixtures/-default/package/bar.js"
+          }
+        }
+      ]
+    }
+  ]
+}

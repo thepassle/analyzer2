@@ -18,6 +18,10 @@
                 "text": "string"
               },
               "default": "Hello"
+            },
+            {
+              "kind": "field",
+              "name": "bar"
             }
           ],
           "attributes": [
@@ -28,6 +32,10 @@
               },
               "default": "Hello",
               "fieldName": "greeting"
+            },
+            {
+              "name": "my-attr",
+              "fieldName": "bar"
             }
           ],
           "superclass": {
