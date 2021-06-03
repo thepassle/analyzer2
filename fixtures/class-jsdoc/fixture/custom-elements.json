@@ -90,7 +90,7 @@
           },
           "tagName": "my-element",
           "summary": "This is MyElement",
-          "isCustomElement": true
+          "customElement": true
         }
       ],
       "exports": [

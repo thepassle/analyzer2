@@ -19,12 +19,12 @@ export function isCustomElementPlugin() {
           if(klass) {
             /** If a class has a tagName, that means its been defined, and is a custom element */
             if(klass?.tagName) {
-              klass.isCustomElement = true;
+              klass.customElement = true;
             }
 
             /** If a class extends from any of these, its a custom element */
             if(BASECLASSES.includes(klass?.superclass?.name?.toLowerCase())) {
-              klass.isCustomElement = true;
+              klass.customElement = true;
             }
           }
           break;

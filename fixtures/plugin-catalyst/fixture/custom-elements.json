@@ -32,7 +32,7 @@
             "name": "HTMLElement"
           },
           "tagName": "hello-world",
-          "isCustomElement": true
+          "customElement": true
         }
       ],
       "exports": [

@@ -20,7 +20,7 @@
           "superclass": {
             "name": "HTMLElement"
           },
-          "isCustomElement": true,
+          "customElement": true,
           "tagName": "my-element"
         },
         {
@@ -30,7 +30,7 @@
           "superclass": {
             "name": "HTMLElement"
           },
-          "isCustomElement": true,
+          "customElement": true,
           "tagName": "my-window"
         }
       ],

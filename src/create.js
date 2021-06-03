@@ -5,7 +5,6 @@ import { FEATURES } from './features/index.js';
  * 
  * 🚨🚨🚨 TODO
  * - Lightning web components
- * - isCustomElement
  */
 
 /**

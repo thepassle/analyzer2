@@ -21,7 +21,7 @@
             "name": "HTMLElement"
           },
           "tagName": "my-element",
-          "isCustomElement": true
+          "customElement": true
         },
         {
           "kind": "class",
@@ -31,7 +31,7 @@
             "name": "HTMLElement"
           },
           "tagName": "my-window",
-          "isCustomElement": true
+          "customElement": true
         }
       ],
       "exports": [

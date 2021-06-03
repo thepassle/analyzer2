@@ -113,7 +113,7 @@
           "superclass": {
             "name": "HTMLElement"
           },
-          "isCustomElement": true,
+          "customElement": true,
           "tagName": "my-el"
         }
       ],

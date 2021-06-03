@@ -31,7 +31,7 @@
           "superclass": {
             "name": "HTMLElement"
           },
-          "isCustomElement": true,
+          "customElement": true,
           "tagName": "hello-world"
         }
       ],

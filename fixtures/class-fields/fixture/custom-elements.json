@@ -114,7 +114,7 @@
             "name": "HTMLElement"
           },
           "tagName": "my-el",
-          "isCustomElement": true
+          "customElement": true
         }
       ],
       "exports": [

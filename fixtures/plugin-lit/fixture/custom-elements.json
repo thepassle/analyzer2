@@ -71,7 +71,7 @@
             "name": "LitElement"
           },
           "tagName": "my-element",
-          "isCustomElement": true
+          "customElement": true
         }
       ],
       "exports": [

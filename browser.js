@@ -2133,7 +2133,6 @@ var analyzer = (function (exports, ts) {
    * 
    * 🚨🚨🚨 TODO
    * - Lightning web components
-   * - isCustomElement
    */
 
   /**

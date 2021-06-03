@@ -21,7 +21,7 @@
           "superclass": {
             "name": "HTMLElement"
           },
-          "isCustomElement": true
+          "customElement": true
         },
         {
           "kind": "class",
@@ -30,7 +30,7 @@
           "superclass": {
             "name": "LitElement"
           },
-          "isCustomElement": true
+          "customElement": true
         },
         {
           "kind": "class",
@@ -39,7 +39,7 @@
           "superclass": {
             "name": "FASTElement"
           },
-          "isCustomElement": true
+          "customElement": true
         },
         {
           "kind": "class",

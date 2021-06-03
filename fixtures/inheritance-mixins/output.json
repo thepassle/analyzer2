@@ -266,7 +266,7 @@
           "superclass": {
             "name": "HTMLElement"
           },
-          "isCustomElement": true
+          "customElement": true
         }
       ],
       "exports": [

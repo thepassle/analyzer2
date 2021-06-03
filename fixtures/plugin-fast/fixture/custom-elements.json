@@ -42,7 +42,7 @@
             "name": "FASTElement"
           },
           "tagName": "name-tag",
-          "isCustomElement": true
+          "customElement": true
         }
       ],
       "exports": [
