@@ -1,10 +1,6 @@
 # @custom-elements-manifest/analyzer
 
-> ⚠️ This project is still experimental, please try it out in your projects and create issues if you run into any problems
-
-Custom Elements Manifest is a file format that describes custom elements. This format will allow tooling and IDEs to give rich information about the custom elements in a given project. It is, however, very experimental and things are subject to change. Follow the discussion [here](https://github.com/webcomponents/custom-elements-manifest).
-
-This implementation is at a very early stage of development, and there will probably be bugs or things missing from the output `custom-elements.json`. You can help this project by trying it out in your project, and creating an issue if you find anything weird.
+Custom Elements Manifest is a file format that describes custom elements. This format will allow tooling and IDEs to give rich information about the custom elements in a given project. You can find the repository for the specification of the schema [here](https://github.com/webcomponents/custom-elements-manifest).
 
 ## Install
 
@@ -535,4 +531,34 @@ export function myPlugin(typeChecker) {
   }
 }
 
+```
+
+## Usage in the browser
+
+You can also run the analyzer in the browser. You can import it like so:
+
+```html
+<html>
+  <head>
+    <!-- For reasons, you need to load typescript separately. Make sure to load version ~4.0.0, otherwise things might break -->
+    <script src="https://unpkg.com/typescript@4.0.7/lib/typescript.js"></script>
+
+    <!-- Import the code for the analyzer -->
+    <script src="https://unpkg.com/@custom-element-manifest/analyzer@1.0.0/browser.js"></script>
+  </head>
+  <body>
+    <script>
+      const code = `export function foo() {}`;
+
+      const modules = [ts.createSourceFile(
+        '',
+        code,
+        ts.ScriptTarget.ES2015,
+        true,
+      )];
+
+      console.log(analyzer.create({modules}));
+    </script>
+  </body>
+</html>
 ```
