@@ -66,6 +66,7 @@
             }
           ],
           "tagName": "todo-list",
+          "customElement": true,
           "events": [
             {
               "name": "todoCompleted",

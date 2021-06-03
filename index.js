@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import ts from 'typescript';
 import path from 'path';
 import globby from 'globby';

@@ -16,7 +16,6 @@ import { mixinPlugin } from './analyse-phase/mixins.js';
 import { variablePlugin } from './analyse-phase/variables.js';
 import { classJsDocPlugin } from './analyse-phase/class-jsdoc.js';
 import { reexportedWrappedMixinExportsPlugin } from './analyse-phase/reexported-wrapped-mixin-exports.js';
-import { isCustomElementPlugin } from './analyse-phase/is-custom-element.js';
 
 /**
  * LINK
@@ -29,6 +28,7 @@ import { cleanupClassesPlugin } from './link-phase/cleanup-classes.js';
 /**
  * POST-PROCESSING
  */
+import { isCustomElementPlugin } from './analyse-phase/is-custom-element.js';
 import { linkClassToTagnamePlugin } from './post-processing/link-class-to-tagname.js';
 import { applyInheritancePlugin } from './post-processing/apply-inheritance.js';
 
@@ -57,7 +57,6 @@ export const FEATURES = [
   variablePlugin(),
   reexportedWrappedMixinExportsPlugin(),
   classJsDocPlugin(),
-  isCustomElementPlugin(),
 
   /** LINK */
   removeUnexportedDeclarationsPlugin(),
@@ -66,6 +65,7 @@ export const FEATURES = [
   cleanupClassesPlugin(),
 
   /** POST-PROCESSING */
+  isCustomElementPlugin(),
   linkClassToTagnamePlugin(),
   applyInheritancePlugin(),
 

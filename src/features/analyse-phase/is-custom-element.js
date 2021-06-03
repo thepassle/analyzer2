@@ -11,24 +11,22 @@ const BASECLASSES = [
  */
 export function isCustomElementPlugin() {
   return {
-    analyzePhase({ts, node, moduleDoc}){
-      switch(node.kind) {
-        case ts.SyntaxKind.ClassDeclaration:
-          const klass = moduleDoc?.declarations?.find(declaration => declaration.name === node.name.getText());
-
-          if(klass) {
+    packageLinkPhase({customElementsManifest, context}) {
+      customElementsManifest?.modules?.forEach(_module => {
+        _module?.declarations?.forEach(declaration => {
+          if(declaration?.kind === 'class') {
             /** If a class has a tagName, that means its been defined, and is a custom element */
-            if(klass?.tagName) {
-              klass.customElement = true;
+            if(declaration?.tagName) {
+              declaration.customElement = true;
             }
-
+            
             /** If a class extends from any of these, its a custom element */
-            if(BASECLASSES.includes(klass?.superclass?.name?.toLowerCase())) {
-              klass.customElement = true;
+            if(BASECLASSES.includes(declaration?.superclass?.name?.toLowerCase())) {
+              declaration.customElement = true;
             }
           }
-          break;
-      }
+        });
+      });
     }
   }
 }
