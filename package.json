@@ -21,6 +21,7 @@
   "scripts": {
     "start": "nodemon --ignore './custom-elements.json' index.js analyze --dev",
     "test": "uvu test",
+    "build:browser": "rollup -c rollup.config.js",
     "test:watch": "watchexec -w src -w test npm test",
     "update-fixtures": "node scripts/update-version.js --version 0.1.0"
   },
@@ -41,8 +42,10 @@
     "comment-parser": "^1.1.5"
   },
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.0.0",
     "custom-elements-manifest": "^0.1.0",
     "nodemon": "^2.0.4",
+    "rollup": "^2.50.5",
     "uvu": "^0.5.1",
     "watchexec-bin": "^1.0.0"
   },
