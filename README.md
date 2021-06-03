@@ -349,7 +349,7 @@ export default {
   /** Even more advanced usecases: */
   overrideModuleCreation: ({ts, globs}) => {
     const program = ts.createProgram(globs, defaultCompilerOptions);
-    typeChecker = program.getTypeChecker();
+    const typeChecker = program.getTypeChecker();
 
     return program.getSourceFiles().filter(sf => globs.find(glob => sf.fileName.includes(glob)));
   },
@@ -364,7 +364,7 @@ interface userConfigOptions {
   exclude: string[],
   dev: boolean,
   plugins: Array<() => Plugin>,
-  overrideModuleCreation: () => Array<SourceFile>
+  overrideModuleCreation: ({ts: TypeScript, globs: string[]}) => SourceFile[]
 }
 
 ```
@@ -449,7 +449,7 @@ function generateReadme() {
 
   return {
     packageLinkPhase({customElementsManifest, context}) {
-      cem.modules.forEach(mod => {
+      customElementsManifest.modules.forEach(mod => {
         mod.declarations.forEach(declaration => {
           if(components.includes(declaration.tagName)) {
             fs.writeFileSync(
