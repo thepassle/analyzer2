@@ -7,16 +7,36 @@
       "path": "fixtures/-default/package/bar.js",
       "declarations": [
         {
-          "kind": "function",
-          "name": "runChoiceInputMixinSuite"
+          "kind": "class",
+          "description": "",
+          "name": "IngFeatMinnaDashboard",
+          "members": [
+            {
+              "kind": "field",
+              "name": "foo"
+            },
+            {
+              "kind": "method",
+              "name": "bar"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "my-foo"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement"
+          },
+          "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "runChoiceInputMixinSuite",
+          "name": "IngFeatMinnaDashboard",
           "declaration": {
-            "name": "runChoiceInputMixinSuite",
+            "name": "IngFeatMinnaDashboard",
             "module": "fixtures/-default/package/bar.js"
           }
         }

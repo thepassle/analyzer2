@@ -26,6 +26,13 @@ export function classJsDocPlugin() {
           node?.jsDoc?.forEach(jsDoc => {
             const parsed = parse.parse(jsDoc?.getFullText());
             parsed?.forEach(parsedJsDoc => {
+
+              /**
+               * If any of the tags is a `@typedef`, we ignore it; this JSDoc comment may be above a class,
+               * it probably doesnt _belong_ to the class, but something else in the file
+               */
+              if(parsedJsDoc?.tags?.some(tag => tag?.tag === 'typedef')) return;
+
               parsedJsDoc?.tags?.forEach(jsDoc => {
                 switch(jsDoc.tag) {
                   case 'attr':
@@ -42,6 +49,7 @@ export function classJsDocPlugin() {
                     const fieldAlreadyExists = classDoc?.members?.find(member => member.name === jsDoc.name);
                     let fieldDoc = fieldAlreadyExists || {};
                     fieldDoc = handleClassJsDoc(fieldDoc, jsDoc);
+                    fieldDoc.kind = 'field';
                     if(!fieldAlreadyExists) {
                       classDoc.members.push(fieldDoc);
                     }

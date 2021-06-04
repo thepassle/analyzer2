@@ -1,3 +1,11 @@
+// typedef should be ignored
+/**
+ * @typedef {Object} MenuItem
+ * @property {string} icon
+ * @property {string} id
+ * @property {string} label
+ */
+
 /**
  * @attr {boolean} disabled - disables the element
  * @attribute {string} foo - description for foo

@@ -39,14 +39,16 @@
                 "text": "boolean"
               },
               "description": "- some description",
-              "name": "prop1"
+              "name": "prop1",
+              "kind": "field"
             },
             {
               "type": {
                 "text": "number"
               },
               "description": "- some description",
-              "name": "prop2"
+              "name": "prop2",
+              "kind": "field"
             }
           ],
           "events": [

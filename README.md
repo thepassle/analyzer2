@@ -389,7 +389,7 @@ Example source code:
 
 export class MyElement extends HTMLElement {
   /**
-   * @editvia textarea[rows=2]
+   * @foo Some custom information!
    */ 
   message = ''
 }
@@ -399,40 +399,38 @@ export class MyElement extends HTMLElement {
 ```js
 export default {
   plugins: [
-    function myPlugin() {
-      return {
-        // Runs for all modules in a project, before continuing to the `analyzePhase`
-        collectPhase({ts, node, context}){},
-        // Runs for each module
-        analyzePhase({ts, node, moduleDoc, context}){
-          // You can use this phase to access a module's AST nodes and mutate the custom-elements-manifest
-          switch (node.kind) {
-            case ts.SyntaxKind.ClassDeclaration:
-              const className = node.name.getText();
+    {
+      // Runs for all modules in a project, before continuing to the `analyzePhase`
+      collectPhase({ts, node, context}){},
+      // Runs for each module
+      analyzePhase({ts, node, moduleDoc, context}){
+        // You can use this phase to access a module's AST nodes and mutate the custom-elements-manifest
+        switch (node.kind) {
+          case ts.SyntaxKind.ClassDeclaration:
+            const className = node.name.getText();
 
-              node.members?.forEach(member => {
-                const memberName = member.name.getText();
+            node.members?.forEach(member => {
+              const memberName = member.name.getText();
 
-                member.jsDoc?.forEach(jsDoc => {
-                  jsDoc.tags?.forEach(tag => {
-                    if(tag.tagName.getText() === 'editvia') {
-                      const description = tag.comment;
+              member.jsDoc?.forEach(jsDoc => {
+                jsDoc.tags?.forEach(tag => {
+                  if(tag.tagName.getText() === 'editvia') {
+                    const description = tag.comment;
 
-                      const classDeclaration = moduleDoc.declarations.find(declaration => declaration.name === className);
-                      const messageField = classDeclaration.members.find(member => member.name === memberName);
-                      
-                      messageField.editvia = description
-                    }
-                  });
+                    const classDeclaration = moduleDoc.declarations.find(declaration => declaration.name === className);
+                    const messageField = classDeclaration.members.find(member => member.name === memberName);
+                    
+                    messageField.editvia = description
+                  }
                 });
               });
-          }
-        },
-        // Runs for each module, after analyzing, all information about your module should now be available
-        moduleLinkPhase({moduleDoc, context}){},
-        // Runs after modules have been parsed and after post-processing
-        packageLinkPhase({customElementsManifest, context}){},
-      }
+            });
+        }
+      },
+      // Runs for each module, after analyzing, all information about your module should now be available
+      moduleLinkPhase({moduleDoc, context}){},
+      // Runs after modules have been parsed and after post-processing
+      packageLinkPhase({customElementsManifest, context}){},
     }
   ]  
 }
