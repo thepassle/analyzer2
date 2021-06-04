@@ -62,7 +62,7 @@ import {
         });
 
     let plugins = await addFrameworkPlugins(mergedOptions);
-    plugins = [...(userConfig?.plugins || []), ...plugins];
+    plugins = [...plugins, ...(userConfig?.plugins || [])];
 
     /**
      * Create the manifest
