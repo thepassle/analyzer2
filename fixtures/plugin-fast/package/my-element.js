@@ -6,7 +6,7 @@ const template = html<NameTag>`
     <h4>my name is</h4>
   </div>
 
-  <div class="body">TODO: Name Here</div>
+  <div class="body">Name Here</div>
 
   <div class="footer"></div>
 `;

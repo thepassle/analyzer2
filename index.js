@@ -17,9 +17,7 @@ import {
 } from './src/utils/cli.js';
 
 (async () => {
-  const mainDefinitions = [
-    { name: 'command', defaultOption: true }
-  ]
+  const mainDefinitions = [{ name: 'command', defaultOption: true }];
   const mainOptions = commandLineArgs(mainDefinitions, { stopAtFirstUnknown: true });
   const argv = mainOptions._unknown || [];
   
