@@ -61,7 +61,8 @@ import {
           );
         });
 
-    const plugins = await addFrameworkPlugins(mergedOptions);
+    let plugins = await addFrameworkPlugins(mergedOptions);
+    plugins = [...(userConfig?.plugins || []), ...plugins];
 
     /**
      * Create the manifest
