@@ -538,8 +538,8 @@ You can also run the analyzer in the browser. You can import it like so:
 ```html
 <html>
   <head>
-    <!-- For reasons, you need to load typescript separately. Make sure to load version ~4.0.0, otherwise things might break -->
-    <script src="https://unpkg.com/typescript@4.0.7/lib/typescript.js"></script>
+    <!-- For reasons, you need to load typescript separately. Make sure to load version ~4.3.0, otherwise things might break -->
+    <script src="https://unpkg.com/typescript@4.3.2/lib/typescript.js"></script>
 
     <!-- Import the code for the analyzer -->
     <script src="https://unpkg.com/@custom-element-manifest/analyzer@1.0.0/browser.js"></script>

@@ -38,15 +38,3 @@ export const toKebabCase = str => {
      : letter;
   }).join('');
 }
-
-/**
- * TS seems to break on @deprecated jsdoc annotations, which unfortunately
- * breaks a lot of calls to `tag?.tagName?.getText(), so we wrap it in a try/catch
- */
-export const safeGetText = tag => {
-  try {
-    return tag?.tagName?.getText()
-  } catch {
-    return '';
-  }
-}

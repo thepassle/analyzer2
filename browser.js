@@ -34,18 +34,6 @@ var analyzer = (function (exports, ts) {
   }
 
   /**
-   * TS seems to break on @deprecated jsdoc annotations, which unfortunately
-   * breaks a lot of calls to `tag?.tagName?.getText(), so we wrap it in a try/catch
-   */
-  const safeGetText = tag => {
-    try {
-      return tag?.tagName?.getText()
-    } catch {
-      return '';
-    }
-  };
-
-  /**
    * UTILITIES RELATED TO MODULE IMPORTS
    */
 
@@ -342,7 +330,7 @@ var analyzer = (function (exports, ts) {
    * @example @attr
    */
   function hasAttrAnnotation(member) {
-    return member?.jsDoc?.some(jsDoc => jsDoc?.tags?.some(tag => safeGetText(tag) === 'attr'));
+    return member?.jsDoc?.some(jsDoc => jsDoc?.tags?.some(tag => tag?.tagName?.getText() === 'attr'));
   }
 
 
@@ -502,7 +490,7 @@ var analyzer = (function (exports, ts) {
 
 
         /** @summary */
-        if(safeGetText(tag) === 'summary') {
+        if(tag?.tagName?.getText() === 'summary') {
           doc.summary = tag.comment;
         }
 
@@ -1597,6 +1585,13 @@ var analyzer = (function (exports, ts) {
             node?.jsDoc?.forEach(jsDoc => {
               const parsed = parse.parse(jsDoc?.getFullText());
               parsed?.forEach(parsedJsDoc => {
+
+                /**
+                 * If any of the tags is a `@typedef`, we ignore it; this JSDoc comment may be above a class,
+                 * it probably doesnt _belong_ to the class, but something else in the file
+                 */
+                if(parsedJsDoc?.tags?.some(tag => tag?.tag === 'typedef')) return;
+
                 parsedJsDoc?.tags?.forEach(jsDoc => {
                   switch(jsDoc.tag) {
                     case 'attr':
@@ -1613,6 +1608,7 @@ var analyzer = (function (exports, ts) {
                       const fieldAlreadyExists = classDoc?.members?.find(member => member.name === jsDoc.name);
                       let fieldDoc = fieldAlreadyExists || {};
                       fieldDoc = handleClassJsDoc(fieldDoc, jsDoc);
+                      fieldDoc.kind = 'field';
                       if(!fieldAlreadyExists) {
                         classDoc.members.push(fieldDoc);
                       }
@@ -1664,7 +1660,7 @@ var analyzer = (function (exports, ts) {
                * Instead, we use TS for this JSDoc annotation.
                */
               jsDoc?.tags?.forEach(tag => {
-                switch(safeGetText(tag)) {
+                switch(tag?.tagName?.getText()) {
                   case 'summary':
                     classDoc.summary = tag?.comment;
                     break;
@@ -2161,7 +2157,6 @@ var analyzer = (function (exports, ts) {
    * 🚨🚨🚨 TODO
    * - Lightning web components
    * - playground 
-   * - blog
    * - storybook
    */
 
