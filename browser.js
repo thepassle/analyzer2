@@ -34,6 +34,18 @@ var analyzer = (function (exports, ts) {
   }
 
   /**
+   * TS seems to break on @deprecated jsdoc annotations, which unfortunately
+   * breaks a lot of calls to `tag?.tagName?.getText(), so we wrap it in a try/catch
+   */
+  const safeGetText = tag => {
+    try {
+      return tag?.tagName?.getText()
+    } catch {
+      return '';
+    }
+  };
+
+  /**
    * UTILITIES RELATED TO MODULE IMPORTS
    */
 
@@ -330,8 +342,9 @@ var analyzer = (function (exports, ts) {
    * @example @attr
    */
   function hasAttrAnnotation(member) {
-    return member?.jsDoc?.some(jsDoc => jsDoc?.tags?.some(tag => tag?.tagName?.getText() === 'attr'));
+    return member?.jsDoc?.some(jsDoc => jsDoc?.tags?.some(tag => safeGetText(tag) === 'attr'));
   }
+
 
   /** 
    * Whether or not node is:
@@ -487,8 +500,9 @@ var analyzer = (function (exports, ts) {
           };
         }
 
+
         /** @summary */
-        if(tag?.tagName?.getText() === 'summary') {
+        if(safeGetText(tag) === 'summary') {
           doc.summary = tag.comment;
         }
 
@@ -1650,14 +1664,14 @@ var analyzer = (function (exports, ts) {
                * Instead, we use TS for this JSDoc annotation.
                */
               jsDoc?.tags?.forEach(tag => {
-                switch(tag?.tagName?.getText()) {
+                switch(safeGetText(tag)) {
                   case 'summary':
                     classDoc.summary = tag?.comment;
                     break;
                 }
               });
             });
-            
+
             break;
         }
       }
@@ -1848,6 +1862,39 @@ var analyzer = (function (exports, ts) {
     }
   }
 
+  const BASECLASSES = [
+    'htmlelement', 
+    'litelement', 
+    'fastelement'
+  ];
+
+  /**
+   * ISCUSTOMELEMENT
+   * 
+   * Heuristic to see whether or not a class is a custom element
+   */
+  function isCustomElementPlugin() {
+    return {
+      packageLinkPhase({customElementsManifest, context}) {
+        customElementsManifest?.modules?.forEach(_module => {
+          _module?.declarations?.forEach(declaration => {
+            if(declaration?.kind === 'class') {
+              /** If a class has a tagName, that means its been defined, and is a custom element */
+              if(declaration?.tagName) {
+                declaration.customElement = true;
+              }
+              
+              /** If a class extends from any of these, its a custom element */
+              if(BASECLASSES.includes(declaration?.superclass?.name?.toLowerCase())) {
+                declaration.customElement = true;
+              }
+            }
+          });
+        });
+      }
+    }
+  }
+
   /**
    * UTILITIES RELATED TO GETTING INFORMATION OUT OF A MANIFEST OR DOC
    */
@@ -2022,8 +2069,9 @@ var analyzer = (function (exports, ts) {
     return {
       packageLinkPhase({customElementsManifest, context}){
         const classes = getAllDeclarationsOfKind(customElementsManifest, 'class');
+        const mixins = getAllDeclarationsOfKind(customElementsManifest, 'mixin');
 
-        classes.forEach((customElement) => {
+        [...classes, ...mixins].forEach((customElement) => {
           const inheritanceChain = getInheritanceTree(customElementsManifest, customElement.name);
 
           inheritanceChain?.forEach(klass => {
@@ -2032,28 +2080,6 @@ var analyzer = (function (exports, ts) {
               if (klass?.package) {
                 // the mixin comes from a bare module specifier, skip it
                 return;
-              }
-
-              if (klass?.module) {
-                const klassModule = customElementsManifest?.modules?.find(_module => _module.path === klass.module);
-
-                if (klassModule) {
-                  const foundMixin = klassModule?.declarations?.find(declaration => declaration.kind === 'mixin' && declaration.name === klass.name);
-
-                  foundMixin?.members?.forEach(member => {
-                    const newMember = {
-                      ...member,
-                      inheritedFrom: {
-                        name: klass.name,
-                        module: klass.module,
-                      },
-                    };
-
-                    if (customElement?.members) {
-                      customElement.members = [...( customElement.members || []), newMember];
-                    }
-                  });
-                }
               }
             }
 
@@ -2119,6 +2145,7 @@ var analyzer = (function (exports, ts) {
     cleanupClassesPlugin(),
 
     /** POST-PROCESSING */
+    isCustomElementPlugin(),
     linkClassToTagnamePlugin(),
     applyInheritancePlugin(),
 
@@ -2133,6 +2160,9 @@ var analyzer = (function (exports, ts) {
    * 
    * 🚨🚨🚨 TODO
    * - Lightning web components
+   * - playground 
+   * - blog
+   * - storybook
    */
 
   /**

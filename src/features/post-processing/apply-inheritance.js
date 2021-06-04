@@ -10,8 +10,9 @@ export function applyInheritancePlugin() {
   return {
     packageLinkPhase({customElementsManifest, context}){
       const classes = getAllDeclarationsOfKind(customElementsManifest, 'class');
+      const mixins = getAllDeclarationsOfKind(customElementsManifest, 'mixin');
 
-      classes.forEach((customElement) => {
+      [...classes, ...mixins].forEach((customElement) => {
         const inheritanceChain = getInheritanceTree(customElementsManifest, customElement.name);
 
         inheritanceChain?.forEach(klass => {
@@ -20,28 +21,6 @@ export function applyInheritancePlugin() {
             if (klass?.package) {
               // the mixin comes from a bare module specifier, skip it
               return;
-            }
-
-            if (klass?.module) {
-              const klassModule = customElementsManifest?.modules?.find(_module => _module.path === klass.module);
-
-              if (klassModule) {
-                const foundMixin = klassModule?.declarations?.find(declaration => declaration.kind === 'mixin' && declaration.name === klass.name);
-
-                foundMixin?.members?.forEach(member => {
-                  const newMember = {
-                    ...member,
-                    inheritedFrom: {
-                      name: klass.name,
-                      module: klass.module,
-                    },
-                  };
-
-                  if (customElement?.members) {
-                    customElement.members = [...( customElement.members || []), newMember];
-                  }
-                });
-              }
             }
           }
 

@@ -7,117 +7,16 @@
       "path": "fixtures/-default/package/bar.js",
       "declarations": [
         {
-          "kind": "class",
-          "description": "",
-          "name": "MyEl1",
-          "superclass": {
-            "name": "BlaElement"
-          }
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "MyEl2",
-          "superclass": {
-            "name": "HTMLElement"
-          },
-          "customElement": true
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "MyEl3",
-          "superclass": {
-            "name": "LitElement"
-          },
-          "customElement": true
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "MyEl4",
-          "superclass": {
-            "name": "FASTElement"
-          },
-          "customElement": true
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "MyEl5",
-          "superclass": {
-            "name": "BlaElement"
-          },
-          "tagName": "my-el5"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Foo",
-          "superclass": {
-            "name": "Something"
-          }
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Bar"
+          "kind": "function",
+          "name": "runChoiceInputMixinSuite"
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "MyEl1",
+          "name": "runChoiceInputMixinSuite",
           "declaration": {
-            "name": "MyEl1",
-            "module": "fixtures/-default/package/bar.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "MyEl2",
-          "declaration": {
-            "name": "MyEl2",
-            "module": "fixtures/-default/package/bar.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "MyEl3",
-          "declaration": {
-            "name": "MyEl3",
-            "module": "fixtures/-default/package/bar.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "MyEl4",
-          "declaration": {
-            "name": "MyEl4",
-            "module": "fixtures/-default/package/bar.js"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "my-el5",
-          "declaration": {
-            "name": "MyEl5",
-            "module": "fixtures/-default/package/bar.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "Foo",
-          "declaration": {
-            "name": "Foo",
-            "module": "fixtures/-default/package/bar.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "Bar",
-          "declaration": {
-            "name": "Bar",
+            "name": "runChoiceInputMixinSuite",
             "module": "fixtures/-default/package/bar.js"
           }
         }

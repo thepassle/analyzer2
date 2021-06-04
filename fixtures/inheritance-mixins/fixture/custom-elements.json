@@ -100,6 +100,22 @@
             {
               "kind": "method",
               "name": "mixinMethod"
+            },
+            {
+              "kind": "field",
+              "name": "nestedMixinField",
+              "inheritedFrom": {
+                "name": "NestedMixin",
+                "module": "fixtures/inheritance-mixins/package/my-element.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "nestedMixinMethod",
+              "inheritedFrom": {
+                "name": "NestedMixin",
+                "module": "fixtures/inheritance-mixins/package/my-element.js"
+              }
             }
           ],
           "events": [
@@ -108,11 +124,28 @@
               "type": {
                 "text": "Event"
               }
+            },
+            {
+              "name": "nestedMixin-event",
+              "type": {
+                "text": "Event"
+              },
+              "inheritedFrom": {
+                "name": "NestedMixin",
+                "module": "fixtures/inheritance-mixins/package/my-element.js"
+              }
             }
           ],
           "attributes": [
             {
               "name": "mixin-attr"
+            },
+            {
+              "name": "nestedMixin-attr",
+              "inheritedFrom": {
+                "name": "NestedMixin",
+                "module": "fixtures/inheritance-mixins/package/my-element.js"
+              }
             }
           ],
           "mixins": [

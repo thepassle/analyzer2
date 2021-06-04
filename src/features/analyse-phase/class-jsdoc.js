@@ -1,4 +1,5 @@
 import parse from 'comment-parser';
+import { safeGetText } from '../../utils/index.js';
 import { handleJsDocType } from '../../utils/jsdoc.js';
 
 /**
@@ -92,14 +93,14 @@ export function classJsDocPlugin() {
              * Instead, we use TS for this JSDoc annotation.
              */
             jsDoc?.tags?.forEach(tag => {
-              switch(tag?.tagName?.getText()) {
+              switch(safeGetText(tag)) {
                 case 'summary':
                   classDoc.summary = tag?.comment;
                   break;
               }
             });
           });
-          
+
           break;
       }
     }
