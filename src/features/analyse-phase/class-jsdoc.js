@@ -80,7 +80,9 @@ export function classJsDocPlugin() {
                     break;
                   case 'tag':
                   case 'tagname':
+                  case 'element':
                     classDoc.tagName = jsDoc?.name || '';
+                    break;
                 }
               })
             });
