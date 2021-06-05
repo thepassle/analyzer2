@@ -542,7 +542,7 @@ You can also run the analyzer in the browser. You can import it like so:
     <script src="https://unpkg.com/typescript@4.3.2/lib/typescript.js"></script>
 
     <!-- Import the code for the analyzer -->
-    <script src="https://unpkg.com/@custom-element-manifest/analyzer@1.0.0/browser.js"></script>
+    <script src="https://unpkg.com/@custom-element-manifest/analyzer@1.0.0/browser/browser.js"></script>
   </head>
   <body>
     <script>
