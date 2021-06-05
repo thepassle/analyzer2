@@ -1583,7 +1583,7 @@ var analyzer = (function (exports, ts) {
              * Checks to see if the item is already in the classDoc, and if so merge and overwrite (JSDoc takes precedence)
              */
             node?.jsDoc?.forEach(jsDoc => {
-              const parsed = parse.parse(jsDoc?.getFullText());
+              const parsed = parse(jsDoc?.getFullText());
               parsed?.forEach(parsedJsDoc => {
 
                 /**
