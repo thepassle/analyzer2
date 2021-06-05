@@ -2,6 +2,8 @@
 
 Custom Elements Manifest is a file format that describes custom elements. This format will allow tooling and IDEs to give rich information about the custom elements in a given project. You can find the repository for the specification of the schema [here](https://github.com/webcomponents/custom-elements-manifest).
 
+> ✨ Try it out in the [online playground](https://custom-elements-manifest.netlify.app/)! ✨
+
 ## Install
 
 ```bash
@@ -373,6 +375,8 @@ interface userConfigOptions {
 
 You can also write custom plugins to extend the functionality to fit what your project needs. You can extract custom JSDoc tags for example, or implement support for a new Web Component library.
 
+> You can use the [online playground](https://custom-elements-manifest.netlify.app/) for quickly prototyping plugin ideas, right in the browser
+
 A plugin is a function that returns an object. There are several hooks you can opt in to:
 
 - **collectPhase**: First passthrough through the AST of all modules in a project, before continuing to the `analyzePhase`. Runs for each module, and gives access to a Context object that you can use for sharing data between phases, and gives access to the AST nodes of your source code. This is useful for collecting information you may need access to in a later phase.
@@ -414,13 +418,13 @@ export default {
 
               member.jsDoc?.forEach(jsDoc => {
                 jsDoc.tags?.forEach(tag => {
-                  if(tag.tagName.getText() === 'editvia') {
+                  if(tag.tagName.getText() === 'foo') {
                     const description = tag.comment;
 
                     const classDeclaration = moduleDoc.declarations.find(declaration => declaration.name === className);
                     const messageField = classDeclaration.members.find(member => member.name === memberName);
                     
-                    messageField.editvia = description
+                    messageField.foo = description
                   }
                 });
               });
@@ -542,7 +546,7 @@ You can also run the analyzer in the browser. You can import it like so:
     <script src="https://unpkg.com/typescript@4.3.2/lib/typescript.js"></script>
 
     <!-- Import the code for the analyzer -->
-    <script src="https://unpkg.com/@custom-element-manifest/analyzer@1.0.0/browser/browser.js"></script>
+    <script src="https://unpkg.com/@custom-element-manifest/analyzer@1.0.0/browser/create.js"></script>
   </head>
   <body>
     <script>
