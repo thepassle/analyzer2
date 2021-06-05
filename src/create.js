@@ -2,10 +2,8 @@ import ts from 'typescript';
 import { FEATURES } from './features/index.js';
 
 /**
- * 
- * 🚨🚨🚨 TODO
+ * 🚨 TODO
  * - Lightning web components
- * - playground 
  * - storybook
  */
 
